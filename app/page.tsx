@@ -1,6 +1,3 @@
-"use client"
-import React from "react";
-
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-pink-100 via-pink-50 to-purple-100 text-gray-800">

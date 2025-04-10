@@ -1,16 +1,23 @@
-// /app/layout.tsx
-import { SessionProvider } from 'next-auth/react';
-import { FirebaseAuthProvider } from '@/components/auth/FirebaseAuthProvider';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+const inter = Inter({ subsets: ['latin'] });
+
+export const metadata: Metadata = {
+  title: 'LoveYuu - Contador para casais',
+  description: 'Crie um contador personalizado para o seu relacionamento',
+};
+
+export default function RootLayout({ 
+  children 
+}: { 
+  children: React.ReactNode 
+}) {
   return (
     <html lang="pt-BR">
-      <body>
-        <SessionProvider>
-          <FirebaseAuthProvider>
-            {children}
-          </FirebaseAuthProvider>
-        </SessionProvider>
+      <body className={inter.className}>
+        {children}
       </body>
     </html>
   );
