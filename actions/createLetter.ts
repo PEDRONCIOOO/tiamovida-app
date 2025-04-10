@@ -6,6 +6,29 @@ import { revalidatePath } from 'next/cache';
 /// Função para criar uma carta de amor
 export async function createLetter(formData: FormData) {
   try {
+    // Obter o token do reCAPTCHA do formulário
+    const recaptchaToken = formData.get('recaptchaToken') as string;
+    
+    // Verificar se o token foi fornecido
+    if (!recaptchaToken) {
+      return { success: false, error: 'Verificação de reCAPTCHA necessária' };
+    }
+    
+    // Verificar o token com a API do Google
+    const recaptchaResponse = await fetch(
+      `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
+      {
+        method: 'POST'
+      }
+    );
+    
+    const recaptchaData = await recaptchaResponse.json();
+    
+    // Se o reCAPTCHA não for válido, retornar erro
+    if (!recaptchaData.success) {
+      return { success: false, error: 'Falha na verificação do reCAPTCHA. Por favor, tente novamente.' };
+    }
+
     // Extrair dados do formulário
     const coupleNames = formData.get('coupleNames') as string;
     const relationshipDate = formData.get('relationshipDate') as string;
@@ -56,9 +79,9 @@ export async function createLetter(formData: FormData) {
     revalidatePath('/dashboard');
     
     return { 
-      success: true, 
+      success: true,
       slug,
-      shareUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/love/${slug}` 
+      shareUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/love/${slug}`
     };
   } catch (error) {
     console.error('Erro ao criar carta:', error);
