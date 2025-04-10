@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TiaMovida App - Create & Share Special Moments
 
-## Getting Started
+A modern web application that allows users to create, customize, and share special romantic moments with loved ones.
 
-First, run the development server:
+## 💖 About
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+TiaMovida (LoveYuu) is a platform for creating personalized romantic letters, messages, and moments that can be shared with special people in your life. Express your feelings in a unique way with beautiful customizations, media attachments, and delivery options.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Message Creation**: Craft personalized romantic messages
+- **Media Support**: Add photos, audio, or videos to your messages
+- **Payment Integration**: Premium features via Stripe and MercadoPago
+- **Sharing Options**: Share via link, email, or schedule for future delivery
+- **Authentication**: User accounts to manage your created moments
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Tech Stack
 
-## Learn More
+- Next.js 15.3.0 with App Router
+- React 19
+- TypeScript
+- TailwindCSS
+- Firebase (Auth, Firestore, Storage)
+- Stripe & MercadoPago payment processing
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠️ Development Roadmap
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [ ] Basic message creation
+- [ ] Media uploads (photos, audio)
+- [ ] Payment processing
+- [ ] Email delivery
+- [ ] Message scheduling
+- [ ] Social sharing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 👨‍💻 Development Team
 
-## Deploy on Vercel
+Created with love by:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Pedro Trotta** - Lead Developer & Project Architect
+- **Douglas Dias** - Backend Developer & Firebase Expert
+- **Weverton Gomes** -  Frontend Engineer & UX Specialist
+- **Cleverton Jaber** - Payment Integration & Security Specialist
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📝 License
+
+MIT License - We don't share this app, this is a private project licensed.
