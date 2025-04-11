@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Regras para a coleção de slugs
+    match /slugs/{slug} {
+      // Qualquer pessoa pode ler um slug (para visualizar cartas compartilhadas)
+      allow read: if true;
+      
+      // Apenas usuários autenticados podem criar novos slugs
+      allow create: if request.auth != null || 
+                    request.resource.data.userId.matches('guest-.*');
+      
+      // Apenas o dono pode atualizar ou excluir
+      allow update, delete: if request.auth != null && 
+                             request.auth.uid == resource.data.userId;
+    }
+    
+    // Regras para a coleção de usuários
+    match /users/{userId} {
+      // Usuários só podem ler/escrever seus próprios dados
+      allow read, write: if request.auth != null && 
+                          request.auth.uid == userId;
+    }
+    
+    // Regras para a coleção de pagamentos
+    match /payments/{paymentId} {
+      // Usuários só podem ler seus próprios pagamentos
+      allow read: if request.auth != null && 
+                   resource.data.userId == request.auth.uid;
+      
+      // Apenas funções do servidor podem criar/atualizar pagamentos
+      allow create, update: if request.auth != null && 
+                             request.auth.uid == resource.data.userId;
+      
+      // Ninguém pode excluir pagamentos
+      allow delete: if false;
+    }
+  }
+}
