@@ -72,8 +72,8 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
-              Descubra a magia de ser o protagonista de uma história de amor única. 
-              <span className="bg-gradient-to-r from-pink-400 to-red-400 bg-clip-text text-transparent font-bold"> Surpreenda seu amor</span> com um presente que ficará para sempre em suas memórias.
+              Crie um contador dinâmico do tempo de relacionamento e ganhe uma imagem transformada em personagem de graça!
+              <span className="bg-gradient-to-r from-pink-400 to-red-400 bg-clip-text text-transparent font-bold"> Surpreenda seu amor</span> só apontar para o QR Code.
             </motion.p>
             
             <motion.div
@@ -114,14 +114,14 @@ export default function HomePage() {
           
           {/* Right Animation/Image */}
           <motion.div
-            className="relative h-[400px] md:h-[500px] lg:h-[600px] flex items-center justify-center"
+            className="relative h-[450px] md:h-[550px] lg:h-[650px] flex items-center justify-center"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             {/* Decorative elements */}
             <motion.div 
-              className="absolute w-64 h-64 rounded-full bg-pink-500/10"
+              className="absolute w-80 h-80 rounded-full bg-pink-500/10"
               animate={{ 
                 scale: [1, 1.2, 1],
                 rotate: [0, 45, 0]
@@ -129,7 +129,7 @@ export default function HomePage() {
               transition={{ duration: 8, repeat: Infinity }}
             />
             <motion.div 
-              className="absolute w-80 h-80 rounded-full bg-purple-500/10"
+              className="absolute w-96 h-96 rounded-full bg-purple-500/10"
               animate={{ 
                 scale: [1.2, 1, 1.2],
                 rotate: [0, -45, 0]
@@ -145,15 +145,35 @@ export default function HomePage() {
               }}
               transition={{ duration: 5, repeat: Infinity }}
             >
-              <div className="relative w-64 h-64 md:w-80 md:h-80">
+              {/* QR Code placed behind the main images */}
+              <motion.div
+                className="absolute -translate-x-1/2 -translate-y-1/2 w-full h-full flex items-center justify-center z-0"
+                animate={{ 
+                  opacity: [0.6, 0.8, 0.6],
+                  scale: [0.9, 1, 0.9],
+                  rotate: [0, 5, 0]
+                }}
+                transition={{ duration: 8, repeat: Infinity }}
+              >
+                <Image
+                  src="/qr-code-love.png"
+                  alt="Escaneie para compartilhar amor"
+                  width={200}
+                  height={200}
+                  className=""
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 via-transparent to-purple-500/20 rounded-full mix-blend-overlay"></div>
+              </motion.div>
+
+              <div className="relative w-80 h-80 md:w-96 md:h-96">
                 {/* Interactive image selection */}
                 <div className="relative w-full h-full">
                   {/* Original image */}
                   <motion.div 
-                    className="absolute w-full h-full rounded-xl overflow-hidden bg-gradient-to-br from-pink-300/30 to-purple-300/30 flex items-center justify-center cursor-pointer"
+                    className="absolute w-full h-full rounded-xl overflow-hidden flex items-center justify-center cursor-pointer"
                     initial={{ x: 0 }}
                     animate={{ 
-                      x: showTransformed ? -60 : 0,
+                      x: showTransformed ? -100 : 0,
                       scale: showTransformed ? 0.9 : 1,
                       zIndex: showTransformed ? 0 : 1
                     }}
@@ -162,10 +182,10 @@ export default function HomePage() {
                     style={{ zIndex: showTransformed ? 0 : 1 }}
                   >
                     <Image
-                      src="/casaltiamu.png"
+                      src="/original-couple.png"
                       alt="Casal Original"
-                      width={300}
-                      height={300}
+                      width={360}
+                      height={360}
                       className="relative z-10"
                     />
                     <motion.div 
@@ -181,7 +201,7 @@ export default function HomePage() {
                     </motion.div>
                     {!showTransformed && (
                       <motion.div 
-                        className="absolute bottom-3 left-3 z-30 bg-pink-500/80 px-3 py-1 rounded-full text-xs font-bold"
+                        className="absolute bottom-3 left-3 z-30 px-3 py-1 rounded-full text-xs font-bold"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.3 }}
@@ -193,10 +213,10 @@ export default function HomePage() {
                   
                   {/* Transformed image */}
                   <motion.div 
-                    className="absolute w-full h-full rounded-xl overflow-hidden bg-gradient-to-br from-purple-400/30 to-pink-400/30 flex items-center justify-center cursor-pointer shadow-xl border border-white/20"
+                    className="absolute w-full h-full rounded-xl overflow-hidden flex items-center justify-center cursor-pointer"
                     initial={{ x: 0 }}
                     animate={{ 
-                      x: showTransformed ? 0 : 60,
+                      x: showTransformed ? 100 : 70,
                       scale: showTransformed ? 1 : 0.9,
                       zIndex: showTransformed ? 1 : 0
                     }}
@@ -205,10 +225,10 @@ export default function HomePage() {
                     style={{ zIndex: showTransformed ? 1 : 0 }}
                   >
                     <Image
-                      src="/casaltiamutransformed.png"
+                      src="/transformed.png"
                       alt="Casal Transformado"
-                      width={300}
-                      height={300}
+                      width={360}
+                      height={360}
                       className="relative z-10"
                     />
                     <motion.div 
@@ -240,10 +260,29 @@ export default function HomePage() {
                       </motion.div>
                     )}
                   </motion.div>
+
+                  {/* QR code indicator */}
+                  <motion.div
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-12 z-30 pointer-events-none"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1, y: [0, -5, 0] }}
+                    transition={{ opacity: { delay: 1.5 }, y: { duration: 2, repeat: Infinity } }}
+                  >
+                    <div className="bg-pink-500/70 backdrop-blur-sm px-4 py-2 rounded-full text-white text-sm font-medium flex items-center gap-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M2 2h2v2H2V2Z"/>
+                        <path d="M6 0v6H0V0h6ZM5 1H1v4h4V1ZM4 12H2v2h2v-2Z"/>
+                        <path d="M6 10v6H0v-6h6Zm-5 1v4h4v-4H1Zm11-9h2v2h-2V2Z"/>
+                        <path d="M10 0v6h6V0h-6Zm5 1v4h-4V1h4ZM8 1V0h1v2H8v2H7V1h1Zm0 5V4h1v2H8ZM6 8V7h1V6h1v2h1V7h5v1h-4v1H7V8H6Zm0 0v1H2V8H1v1H0V7h3v1h3Zm10 1h-1V7h1v2Zm-1 0h-1v2h2v-1h-1V9Zm-4 0h2v1h-1v1h-1V9Zm2 3v-1h-1v1h-1v1h1v1h1v-2Zm1-1v1h1v1h-2v-2h1Zm-2-1h-1v1h1v-1Z"/>
+                        <path d="M9 11H8v1h1v-1Zm3 0h1v1h-1v-1Z"/>
+                      </svg>
+                      Escaneie o QR Code
+                    </div>
+                  </motion.div>
                   
                   {/* Click indicator */}
                   <motion.div
-                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none"
+                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-40 pointer-events-none"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: [0, 0.7, 0] }}
                     transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
