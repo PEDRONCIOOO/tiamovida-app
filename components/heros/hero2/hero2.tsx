@@ -7,6 +7,52 @@ import { useState } from 'react'
 export default function Hero2() {
   const [activeStep, setActiveStep] = useState(0);
   
+  // Predefined floating hearts with fixed positions to prevent hydration errors
+  const floatingHearts = [
+    { 
+      left: "15%", 
+      startX: "20%", 
+      endX: "55%", 
+      duration: 18, 
+      delay: 0 
+    },
+    { 
+      left: "25%", 
+      startX: "30%", 
+      endX: "65%", 
+      duration: 22, 
+      delay: 5 
+    },
+    { 
+      left: "40%", 
+      startX: "45%", 
+      endX: "30%", 
+      duration: 19, 
+      delay: 8 
+    },
+    { 
+      left: "60%", 
+      startX: "65%", 
+      endX: "45%", 
+      duration: 23, 
+      delay: 4 
+    },
+    { 
+      left: "75%", 
+      startX: "70%", 
+      endX: "85%", 
+      duration: 20, 
+      delay: 7 
+    },
+    { 
+      left: "85%", 
+      startX: "90%", 
+      endX: "75%", 
+      duration: 21, 
+      delay: 2 
+    }
+  ];
+  
   const steps = [
     {
       title: "1. Preencha os dados",
@@ -43,32 +89,27 @@ export default function Hero2() {
   ];
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 py-24">
+    <section className="relative flex items-center justify-center overflow-hidden px-4 py-24">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-pink-900/10"></div>
 
-      {/* Floating hearts */}
+      {/* Fixed floating hearts */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(6)].map((_, i) => (
+        {floatingHearts.map((heart, i) => (
           <motion.div
             key={i}
             initial={{ y: '100%', opacity: 0 }}
             animate={{ 
               y: ['-100%'], 
               opacity: [0, 1, 0],
-              x: [
-                `${Math.random() * 100}%`,
-                `${Math.random() * 20 + (i % 2 === 0 ? 40 : 60)}%`
-              ]
+              x: [heart.startX, heart.endX]
             }}
             transition={{ 
-              duration: 15 + Math.random() * 10,
+              duration: heart.duration,
               repeat: Infinity,
-              delay: i * 5
+              delay: heart.delay
             }}
             className="absolute"
-            style={{
-              left: `${10 + Math.random() * 80}%`,
-            }}
+            style={{ left: heart.left }}
           >
             <span className="text-pink-500 text-opacity-30 text-4xl">❤️</span>
           </motion.div>
@@ -167,6 +208,7 @@ export default function Hero2() {
                     alt={step.alt}
                     width={step.width}
                     height={step.height}
+                    draggable="false"
                     className="object-contain max-h-full"
                     style={{
                       width: 'auto',

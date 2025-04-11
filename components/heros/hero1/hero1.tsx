@@ -30,7 +30,7 @@ export default function Hero1() {
   }
   
   return (
-    <main className="flex items-center justify-center text-white overflow-hidden min-h-screen">
+    <main className="flex items-center justify-center text-white overflow-hidden">
       <div className="container mx-auto px-4 md:px-8 py-8 md:py-16 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Left Content - Text section - Now ORDER 1 on mobile */}
@@ -170,6 +170,7 @@ export default function Hero1() {
                 <Image
                   src="/qr-code-love.png"
                   alt="Escaneie para compartilhar amor"
+                  draggable="false"
                   width={200}
                   height={200}
                   className="opacity-60 w-36 h-36 sm:w-48 sm:h-48 md:w-60 md:h-60"
@@ -194,6 +195,7 @@ export default function Hero1() {
                     <Image
                       src="/original-couple.png"
                       alt="Casal Original"
+                      draggable="false"
                       width={280}
                       height={370}
                       className="relative z-10 object-cover h-full w-full"
@@ -231,6 +233,7 @@ export default function Hero1() {
                     <Image
                       src="/transformed.png"
                       alt="Casal Transformado"
+                      draggable="false"
                       width={280}
                       height={370}
                       className="relative z-10 object-cover h-full w-full"
