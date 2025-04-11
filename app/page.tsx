@@ -20,12 +20,12 @@ export default function HomePage() {
     <main className="flex items-center justify-center bg-gray-800 text-white overflow-hidden min-h-screen">
       <div className="container mx-auto px-4 md:px-8 py-8 md:py-16 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
-          {/* Left Content - Text section */}
+          {/* Left Content - Text section - Now ORDER 1 on mobile */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="order-2 lg:order-1 text-center lg:text-left px-4"
+            className="order-1 lg:order-1 text-center lg:text-left px-4 mb-4 sm:mb-0"
           >
             <motion.div 
               className="mb-4 inline-block"
@@ -111,9 +111,9 @@ export default function HomePage() {
             </motion.div>
           </motion.div>
           
-          {/* Right Animation/Image */}
+          {/* Right Animation/Image - Now ORDER 2 on mobile */}
           <motion.div
-            className="relative h-[400px] sm:h-[450px] md:h-[550px] lg:h-[650px] flex items-center justify-center order-1 lg:order-2 -mt-16 sm:mt-0"
+            className="relative h-[400px] sm:h-[450px] md:h-[550px] lg:h-[650px] flex items-center justify-center order-2 lg:order-2 mt-2 sm:mt-0"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
