@@ -39,15 +39,3 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(405).end('Método não permitido');
   }
 }
-
-"use client";
-
-import { SessionProvider } from "next-auth/react";
-
-export default function SessionProviderWrapper({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return <SessionProvider>{children}</SessionProvider>;
-}

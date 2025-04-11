@@ -55,9 +55,15 @@ export async function uploadMedia(file: File, type: MediaType, userId?: string):
     const downloadURL = await getDownloadURL(snapshot.ref);
     
     return downloadURL;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Erro ao fazer upload:', error);
-    throw new Error(`Erro ao fazer upload: ${error.message}`);
+    
+    // Type guard to safely access error.message
+    if (error instanceof Error) {
+      throw new Error(`Erro ao fazer upload: ${error.message}`);
+    } else {
+      throw new Error(`Erro ao fazer upload: ${String(error)}`);
+    }
   }
 }
 

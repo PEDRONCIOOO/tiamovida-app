@@ -16,6 +16,10 @@ export async function checkPayment(paymentId: string) {
     if (!paymentStatus.success) {
       return { success: false, error: 'Erro ao verificar status do pagamento' };
     }
+
+    if (!paymentStatus.status || !paymentStatus.statusDetail) {
+      return { success: false, error: 'Status do pagamento incompleto' };
+    }
     
     // Atualizar status no Firestore
     const paymentRef = doc(db, 'payments', paymentId);
@@ -32,13 +36,13 @@ export async function checkPayment(paymentId: string) {
     });
     
     // Se o pagamento foi aprovado, atualizar status da carta
-    if (paymentStatus.status === 'approved') {
+    if (paymentStatus.status === 'approved' && paymentStatus.externalReference) {
       const slug = paymentStatus.externalReference;
       await updateLetterStatus(slug, 'paid');
     }
     
     // Se o pagamento foi rejeitado ou cancelado
-    if (['rejected', 'cancelled'].includes(paymentStatus.status)) {
+    if (['rejected', 'cancelled'].includes(paymentStatus.status) && paymentStatus.externalReference) {
       const slug = paymentStatus.externalReference;
       await updateLetterStatus(slug, 'cancelled');
     }
@@ -48,8 +52,13 @@ export async function checkPayment(paymentId: string) {
       status: paymentStatus.status,
       statusDetail: paymentStatus.statusDetail
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Erro ao verificar pagamento:', error);
-    return { success: false, error: error.message || 'Erro ao verificar pagamento' };
+    
+    if (error instanceof Error) {
+      return { success: false, error: error.message };
+    } else {
+      return { success: false, error: 'Erro ao verificar pagamento' };
+    }
   }
 }

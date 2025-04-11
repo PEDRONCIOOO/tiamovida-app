@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { checkPaymentStatus } from '@/lib/mercadopago';
 import { updateLetterStatus } from '@/actions/createLetter';
-import { getLetter } from '@/lib/utills';
+import { getLetter } from '@/lib/utils';
 import { sendPaymentConfirmationEmail } from '@/lib/sendEmail';
 
 export async function POST(req: NextRequest) {

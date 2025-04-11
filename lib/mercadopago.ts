@@ -1,9 +1,25 @@
-import mercadopago from 'mercadopago';
+import { MercadoPagoConfig, Payment } from 'mercadopago';
+
+interface CustomPaymentCreateData {
+  body: {
+    transaction_amount: number;
+    description: string;
+    payment_method_id: string;
+    payer: {
+      email: string;
+      first_name: string;
+      last_name: string;
+    };
+    external_reference: string;
+  }
+}
 
 // Configurar SDK do Mercado Pago
-mercadopago.configure({
-  access_token: process.env.MERCADO_PAGO_ACCESS_TOKEN as string,
+const client = new MercadoPagoConfig({ 
+  accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN as string 
 });
+
+const payment = new Payment(client);
 
 /**
  * Cria um pagamento via PIX no Mercado Pago
@@ -26,7 +42,8 @@ export async function createPixPayment(data: {
       externalReference 
     } = data;
 
-    const payment = await mercadopago.payment.create({
+    // Usando o casting para nossa interface personalizada
+    const paymentResponse = await payment.create({
       transaction_amount: transactionAmount,
       description,
       payment_method_id: 'pix',
@@ -36,20 +53,20 @@ export async function createPixPayment(data: {
         last_name: payerLastName,
       },
       external_reference: externalReference,
-    });
+    } as unknown as CustomPaymentCreateData);
 
     return {
       success: true,
-      paymentId: payment.body.id,
-      pixQrCode: payment.body.point_of_interaction.transaction_data.qr_code,
-      pixQrCodeBase64: payment.body.point_of_interaction.transaction_data.qr_code_base64,
-      expirationDate: payment.body.date_of_expiration,
+      paymentId: paymentResponse.id,
+      pixQrCode: paymentResponse.point_of_interaction?.transaction_data?.qr_code,
+      pixQrCodeBase64: paymentResponse.point_of_interaction?.transaction_data?.qr_code_base64,
+      expirationDate: paymentResponse.date_of_expiration,
     };
-  } catch (error: any) {
+  } catch (error) {
     console.error('Erro ao criar pagamento PIX:', error);
     return {
       success: false,
-      error: error.message || 'Erro ao criar pagamento PIX',
+      error: error instanceof Error ? error.message : 'Erro ao criar pagamento PIX',
     };
   }
 }
@@ -59,19 +76,19 @@ export async function createPixPayment(data: {
  */
 export async function checkPaymentStatus(paymentId: string) {
   try {
-    const response = await mercadopago.payment.get(parseInt(paymentId));
+    const response = await payment.get({ id: paymentId });
     
     return {
       success: true,
-      status: response.body.status,
-      statusDetail: response.body.status_detail,
-      externalReference: response.body.external_reference,
+      status: response.status,
+      statusDetail: response.status_detail,
+      externalReference: response.external_reference,
     };
-  } catch (error: any) {
+  } catch (error) {
     console.error('Erro ao verificar status do pagamento:', error);
     return {
       success: false,
-      error: error.message || 'Erro ao verificar status do pagamento',
+      error: error instanceof Error ? error.message : 'Erro ao verificar status do pagamento',
     };
   }
 }

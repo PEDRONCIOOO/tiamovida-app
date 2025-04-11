@@ -1,6 +1,6 @@
 'use server';
 
-import { generateUniqueSlug, saveSlug } from '@/lib/utills';
+import { generateUniqueSlug, saveSlug } from '@/lib/utils';
 import { revalidatePath } from 'next/cache';
 import { uploadMedia } from './uploadMedia';
 import { sendSuccessEmail } from '@/lib/sendEmail';
