@@ -216,7 +216,7 @@ export default function Hero3() {
                 whileTap={{ scale: 0.98 }}
                 className="w-full py-4 bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-400 hover:to-pink-500 rounded-lg text-white font-semibold shadow-lg shadow-pink-500/30 transition-all duration-300"
               >
-                Quero esse plano
+                <Link href="/create">Quero esse plano</Link>
               </motion.button>
             </div>
           </motion.div>
@@ -369,12 +369,12 @@ export default function Hero3() {
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg"></div>
                 <div className="absolute inset-0 bg-gradient-to-r from-pink-400 to-purple-500 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <span className="relative z-10 flex items-center justify-center gap-2">
+                <Link href="/create" className="relative z-10 flex items-center justify-center gap-2">
                   Escolher premium
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                     <path fillRule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
                   </svg>
-                </span>
+                </Link>
               </motion.button>
             </div>
 
@@ -403,22 +403,6 @@ export default function Hero3() {
             </motion.div>
           </motion.div>
         </div>
-
-        {/* FAQ */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-          className="mt-16 bg-gradient-to-br from-[#1a2b4d]/40 to-[#1a2b4d]/20 p-6 sm:p-8 rounded-xl backdrop-blur-sm border border-gray-700/50"
-        >
-          <h3 className="text-xl font-semibold mb-4">Perguntas frequentes</h3>
-          <div className="space-y-3 text-sm text-gray-300">
-            <p><strong>Quanto tempo demora para ficar pronto?</strong> - O site fica pronto imediatamente após o pagamento.</p>
-            <p><strong>Posso trocar as fotos depois?</strong> - No plano Premium você pode modificar as fotos a qualquer momento.</p>
-            <p><strong>É um pagamento único?</strong> - Sim! Você paga apenas uma vez e tem acesso conforme o plano escolhido.</p>
-            <p><strong>Quais os métodos de pagamento?</strong> - Nós utilizamos a <Link href="https://stripe.com" target="_blank" className="text-pink-500">Stripe</Link>. Suportamos PIX e Cartões de Crédito.</p>
-          </div>
-        </motion.div>
       </motion.div>
     </section>
   )

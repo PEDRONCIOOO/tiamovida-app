@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 export default function Hero1() {
@@ -94,14 +95,9 @@ export default function Hero1() {
               transition={{ duration: 0.6, delay: 0.8 }}
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
             >
-              <motion.a
+              <Link
                 href="/create"
                 className="px-8 py-4 bg-gradient-to-r from-pink-500 to-red-500 text-white font-bold rounded-full shadow-lg flex items-center justify-center"
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: "0 0 25px rgba(236, 72, 153, 0.6)"
-                }}
-                whileTap={{ scale: 0.98 }}
               >
                 <span>Crie Agora!</span>
                 <motion.span 
@@ -111,7 +107,7 @@ export default function Hero1() {
                 >
                   →
                 </motion.span>
-              </motion.a>
+              </Link>
               
               <motion.a
                 href="/exemplos"

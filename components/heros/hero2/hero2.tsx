@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link';
 import { useState } from 'react'
 
 export default function Hero2() {
@@ -246,9 +247,11 @@ export default function Hero2() {
           transition={{ delay: 1.2, duration: 0.8 }}
           className="mt-16 text-center"
         >
-          <button className="px-8 py-3 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-medium hover:shadow-lg hover:shadow-pink-500/30 transition-all duration-300 transform hover:-translate-y-1">
+          <Link
+          href="/create"
+          className="px-8 py-3 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-medium hover:shadow-lg hover:shadow-pink-500/30 transition-all duration-300 transform hover:-translate-y-1">
             Comece Agora
-          </button>
+          </Link>
         </motion.div>
       </motion.div>
     </section>

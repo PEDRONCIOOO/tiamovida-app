@@ -28,14 +28,14 @@ export default function Footer() {
 
   return (
     <motion.footer 
-      className="py-12 bg-gradient-to-br from-gray-800 to-black relative overflow-hidden"
+      className="py-12 bg-[#030D21] relative overflow-hidden"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
       <div className="absolute inset-0 overflow-hidden">
         <motion.div 
-          className="absolute w-64 h-64 rounded-full bg-pink-100 -bottom-32 -right-32 opacity-40"
+          className="absolute w-64 h-64 rounded-full bg-pink-300 -bottom-32 -right-32 border-3 border-purple-300 opacity-40"
           animate={{ 
             scale: [1, 1.2, 1],
             rotate: [0, 10, 0]
@@ -43,7 +43,7 @@ export default function Footer() {
           transition={{ duration: 10, repeat: Infinity }}
         />
         <motion.div 
-          className="absolute w-40 h-40 rounded-full bg-purple-100 top-10 -left-20 opacity-40"
+          className="absolute w-40 h-40 rounded-full bg-purple-300 border-3 border-pink-300 top-10 -left-20 opacity-40"
           animate={{ 
             scale: [1, 1.3, 1],
             rotate: [0, -10, 0]

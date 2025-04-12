@@ -193,7 +193,7 @@ export default function Home() {
         PT <ChevronDown className="ml-2 h-4 w-4" />
       </div>
 
-      <div className="container mx-auto px-4 py-8 flex flex-col lg:flex-row lg:gap-10">
+      <div className="container w-7xl mx-auto px-4 py-8 flex flex-col lg:flex-row lg:gap-10">
         {/* Left panel - Form */}
         <motion.div 
           className="flex-grow lg:w-2/3"
