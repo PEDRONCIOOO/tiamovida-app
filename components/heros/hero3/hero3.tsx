@@ -2,10 +2,10 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link';
 import { useState } from 'react'
 
 export default function Hero3() {
-  const [isYearly, setIsYearly] = useState(true);
   const [hoveredPlan, setHoveredPlan] = useState<string | null>(null);
 
   // Floating elements for background
@@ -46,8 +46,6 @@ export default function Hero3() {
             {element.emoji}
           </motion.div>
         ))}
-        
-        {/* Grid lines */}
       </div>
 
       {/* Content container */}
@@ -69,7 +67,7 @@ export default function Hero3() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="inline-block px-4 py-1.5 rounded-full bg-pink-500/20 text-pink-400 text-sm font-medium mb-4"
           >
-            Preços Acessíveis
+            Preço Simbólico
           </motion.span>
           
           <motion.h2
@@ -78,7 +76,7 @@ export default function Hero3() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-pink-200 to-white"
           >
-            Escolha seu plano
+            Escolha seu pacote
           </motion.h2>
           
           <motion.p 
@@ -87,37 +85,8 @@ export default function Hero3() {
             transition={{ delay: 0.5 }}
             className="text-gray-300 mb-10 max-w-xl mx-auto"
           >
-            Crie momentos inesquecíveis com nossos planos personalizados para todas as necessidades.
+            Crie momentos inesquecíveis com nossos pacotes personalizados.
           </motion.p>
-
-          {/* Period Toggle */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.7 }}
-            className="inline-flex items-center p-1.5 bg-gray-800/50 rounded-full border border-gray-700 backdrop-blur-sm mb-10"
-          >
-            <button
-              onClick={() => setIsYearly(false)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                !isYearly 
-                  ? "bg-pink-500 text-white shadow-lg shadow-pink-500/30" 
-                  : "text-gray-300 hover:text-white"
-              }`}
-            >
-              Mensal
-            </button>
-            <button
-              onClick={() => setIsYearly(true)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                isYearly 
-                  ? "bg-pink-500 text-white shadow-lg shadow-pink-500/30" 
-                  : "text-gray-300 hover:text-white"
-              }`}
-            >
-              Anual <span className="text-xs opacity-90">(-20%)</span>
-            </button>
-          </motion.div>
         </motion.div>
 
         {/* Pricing Cards Container */}
@@ -171,15 +140,12 @@ export default function Hero3() {
                 >
                   <div className="flex items-baseline">
                     <span className="text-5xl font-bold">
-                      {isYearly ? "R$29" : "R$3,90"}
+                      R$29
                     </span>
                     <span className="text-gray-400 ml-2">
-                      {isYearly ? "/ano" : "/mês"}
+                      pagamento único
                     </span>
                   </div>
-                  {!isYearly && (
-                    <p className="text-xs text-gray-400 mt-1">Cobrado anualmente como R$46,80</p>
-                  )}
                 </motion.div>
               </div>
 
@@ -319,17 +285,17 @@ export default function Hero3() {
                 >
                   <div className="flex items-baseline">
                     <span className="text-5xl font-bold">
-                      {isYearly ? "R$49" : "R$6,90"}
+                      R$49
                     </span>
                     <span className="text-gray-400 ml-2">
-                      {isYearly ? "/ano" : "/mês"}
+                      pagamento único
                     </span>
                   </div>
                   <div className="flex items-center mt-1">
                     <span className="line-through text-gray-500 mr-2">
-                      {isYearly ? "R$59" : "R$8,90"}
+                      R$69
                     </span>
-                    <span className="bg-pink-500 text-white px-2 py-0.5 rounded text-xs">SAVE 20%</span>
+                    <span className="bg-pink-500 text-white px-2 py-0.5 rounded text-xs">ECONOMIZE 29%</span>
                   </div>
                 </motion.div>
               </div>
@@ -449,6 +415,8 @@ export default function Hero3() {
           <div className="space-y-3 text-sm text-gray-300">
             <p><strong>Quanto tempo demora para ficar pronto?</strong> - O site fica pronto imediatamente após o pagamento.</p>
             <p><strong>Posso trocar as fotos depois?</strong> - No plano Premium você pode modificar as fotos a qualquer momento.</p>
+            <p><strong>É um pagamento único?</strong> - Sim! Você paga apenas uma vez e tem acesso conforme o plano escolhido.</p>
+            <p><strong>Quais os métodos de pagamento?</strong> - Nós utilizamos a <Link href="https://stripe.com" target="_blank" className="text-pink-500">Stripe</Link>. Suportamos PIX e Cartões de Crédito.</p>
           </div>
         </motion.div>
       </motion.div>

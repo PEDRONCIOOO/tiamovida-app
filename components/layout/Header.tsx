@@ -63,7 +63,7 @@ export default function Header() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <div className="container mx-auto flex justify-between items-center">
+      <div className="container mx-auto w-7xl flex justify-between items-center">
         {/* Logo */}
         <Link href="/">
           <motion.div 

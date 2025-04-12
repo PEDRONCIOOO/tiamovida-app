@@ -18,3 +18,17 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+::-webkit-scrollbar{
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: purple;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #030D21;
+  border-radius: 10px;
+}
+

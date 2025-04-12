@@ -89,8 +89,8 @@ export default function Hero2() {
   ];
 
   return (
-    <section className="relative flex items-center justify-center overflow-hidden px-4 py-24">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-pink-900/10"></div>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 py-24">
+      <div className="absolute inset-0"></div>
 
       {/* Fixed floating hearts */}
       <div className="absolute inset-0 overflow-hidden">

@@ -14,7 +14,8 @@ export default function Home() {
     startDate: '',
     startTime: '',
     message: '',
-    photos: [] as File[]
+    photos: [] as File[],
+    musicLink: ''
   });
 
   // Validation state
@@ -248,6 +249,54 @@ export default function Home() {
             >
               Pra sempre, 7 fotos e com música - R$49
             </motion.div>
+
+            {/* YouTube Music Link - Only for Premium Plan */}
+            <AnimatePresence>
+              {selectedPlan === 'premium' && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden md:col-span-2"
+                >
+                  <div className="border border-pink-500/30 rounded-lg p-4 bg-pink-500/5 mt-4 w-full">
+                    <label className="block mb-2 text-white/80">
+                      Link música do YouTube (Opcional):
+                    </label>
+                    <div className="relative w-full">
+                      <motion.input 
+                        type="text" 
+                        name="musicLink"
+                        value={formData.musicLink || ''}
+                        onChange={handleInputChange}
+                        placeholder="https://www.youtube.com/watch?v=..." 
+                        className="w-full p-4 pl-11 bg-white/5 border border-white/10 rounded-lg focus:outline-none transition-colors focus:border-pink-500"
+                        whileFocus={{ scale: 1.01 }}
+                      />
+                      <svg 
+                        className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/50" 
+                        width="18" 
+                        height="18" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                      >
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                        <path d="m12 16 4-4-4-4" />
+                        <path d="M15.5 12H7" />
+                      </svg>
+                    </div>
+                    <p className="mt-2 text-xs text-white/60">
+                      Escolha uma música especial para tocar no seu site
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
 
           {/* Form */}
@@ -474,7 +523,7 @@ export default function Home() {
           >
             {/* Browser dots */}
             <div className="bg-[#111] p-3 flex justify-left">
-              <div className="flex space-x-2">
+              <div className="flex space-x-2 mt-4">
                 <div className="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
                 <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
                 <div className="w-3 h-3 rounded-full bg-[#28ca41]"></div>
