@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { ChevronDown, Camera, Calendar, Clock, Heart, XCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Home() {
   const [selectedPlan, setSelectedPlan] = useState<'basic' | 'premium'>('basic');
@@ -672,7 +673,7 @@ export default function Home() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                 >
-                  <div className="text-lg">Criar nosso site</div>
+                  <Link href="/api/checkout-create-session" className="text-lg">Criar nosso site</Link>
                   <div className="text-sm font-normal mt-1">Tudo pronto para continuar</div>
                 </motion.div>
               ) : (
