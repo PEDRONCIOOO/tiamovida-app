@@ -4,7 +4,7 @@ A modern web application that allows users to create, customize, and share speci
 
 ## 💖 About
 
-TiaMovida (LoveYuu) is a platform for creating personalized romantic letters, messages, and moments that can be shared with special people in your life. Express your feelings in a unique way with beautiful customizations, media attachments, and delivery options.
+TiaMovida (inspired on sucess case LoveYuu) is a platform for creating personalized romantic letters, messages, and moments that can be shared with special people in your life. Express your feelings in a unique way with beautiful customizations, media attachments, and delivery options.
 
 ## ✨ Features
 
@@ -36,11 +36,11 @@ TiaMovida (LoveYuu) is a platform for creating personalized romantic letters, me
 
 Created with love by:
 
-- **Pedro Trotta** - Lead Developer & Project Architect
-- **Douglas Dias** - Backend Developer & Firebase Expert
-- **Weverton Gomes** -  Frontend Engineer & UX Specialist
-- **Cleverton Jaber** - Payment Integration & Security Specialist
+- **Pedro Trotta** - Lead Engineer
+- **Douglas Dias** - Frontend Engineer
+- **Weverton Gomes** -  Frontend Engineer
+- **Cleverton Jaber** - Backend Engineer
 
-## 📝 License
+## 📝 Licensed
 
 MIT License - We don't share this app, this is a private project licensed.
