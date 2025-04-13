@@ -7,10 +7,24 @@ import Image from 'next/image';
 // Remove Link import if no longer needed elsewhere
 // import Link from 'next/link'; 
 import { loadStripe } from '@stripe/stripe-js';
+import { v4 as uuidv4 } from 'uuid';
+import { doc, setDoc } from 'firebase/firestore';
+import { db, storage } from '@/lib/firebase'; // Ensure this exists
+import { ref, uploadBytes } from 'firebase/storage';
 
 // Initialize Stripe outside the component
-// Make sure to add your Stripe publishable key to your environment variables
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
+
+// Debugging function
+const logError = (step: string, error: unknown) => {
+  console.error(`Error in ${step}:`, error);
+  if (error instanceof Error) {
+    console.error('Message:', error.message);
+    console.error('Stack:', error.stack);
+  } else {
+    console.error('Unknown error type:', error);
+  }
+};
 
 export default function Home() {
   const [selectedPlan, setSelectedPlan] = useState<'basic' | 'premium'>('basic');
@@ -169,7 +183,7 @@ export default function Home() {
   };
 
   // Format couple name for URL
-  const formatUrlSlug = (name: string) => {
+  const formatUrlSlug = (name: string): string => {
     if (!name) return 'seu-site';
     return name
       .toLowerCase()
@@ -181,49 +195,104 @@ export default function Home() {
 
   // --- Checkout Handler ---
   const handleCheckout = async () => {
-    if (!isValid || isCheckingOut) return; // Prevent multiple clicks or clicks when invalid
+    if (!isValid || isCheckingOut) return; 
 
     setIsCheckingOut(true);
     setCheckoutError(null);
 
     try {
-      // 1. Create Checkout Session via API
+      console.log("1. Starting checkout process");
+      
+      // 1. Generate a temporary ID
+      const temporaryId = uuidv4();
+      console.log("2. Generated temporaryId:", temporaryId);
+      
+      // 2. Create a slug from the couple name
+      const baseSlug = formatUrlSlug(formData.coupleName);
+      console.log("3. Generated baseSlug:", baseSlug);
+      
+      // 3. Store form data in Firestore
+      try {
+        console.log("4. Storing data in Firestore");
+        await setDoc(doc(db, 'tempLetters', temporaryId), {
+          coupleName: formData.coupleName,
+          relationshipDate: formData.startDate,
+          startTime: formData.startTime,
+          message: formData.message,
+          photoCount: formData.photos.length,
+          musicLink: formData.musicLink || null,
+          baseSlug: baseSlug,
+          createdAt: new Date(),
+          expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+          status: 'pending_payment'
+        });
+        console.log("5. Data stored successfully");
+      } catch (firestoreError) {
+        logError("Firestore storage", firestoreError);
+        throw new Error(`Falha ao salvar os dados temporários: ${firestoreError instanceof Error ? firestoreError.message : 'Erro desconhecido'}`);
+      }
+      
+      // 4. Upload photos
+      console.log("6. Starting photo uploads");
+      try {
+        const photoUploadPromises = formData.photos.map(async (photo, index) => {
+          console.log(`   Uploading photo ${index + 1}: ${photo.name}`);
+          const fileRef = ref(storage, `temp-uploads/${temporaryId}/${index}-${photo.name}`);
+          await uploadBytes(fileRef, photo);
+          return index;
+        });
+        
+        await Promise.all(photoUploadPromises);
+        console.log("7. All photos uploaded successfully");
+      } catch (storageError) {
+        logError("Firebase Storage", storageError);
+        throw new Error(`Falha ao fazer upload das fotos: ${storageError instanceof Error ? storageError.message : 'Erro desconhecido'}`);
+      }
+      
+      // 5. Create checkout session
+      console.log("8. Creating checkout session with data:", {
+        plan: selectedPlan,
+        temporaryId,
+        coupleNames: formData.coupleName,
+      });
+      
       const response = await fetch('/api/create-checkout-session', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
           plan: selectedPlan,
-          // You could potentially pass other formData here if needed in metadata
-          // coupleName: formData.coupleName, 
+          temporaryId: temporaryId,
+          coupleNames: formData.coupleName,
         }),
       });
-
+      
+      console.log("9. API response status:", response.status);
+      
       const sessionData = await response.json();
+      console.log("10. API response data:", sessionData);
 
       if (!response.ok) {
         throw new Error(sessionData.error || sessionData.details || 'Falha ao criar sessão de checkout');
       }
 
-      // 2. Get Stripe.js instance
+      // 6. Redirect to Stripe
+      console.log("11. Redirecting to Stripe checkout");
       const stripe = await stripePromise;
       if (!stripe) {
-        throw new Error('Stripe.js falhou ao carregar.');
+        throw new Error('Falha ao carregar Stripe.');
       }
 
-      // 3. Redirect to Stripe Checkout
       const { error } = await stripe.redirectToCheckout({
         sessionId: sessionData.sessionId,
       });
 
-      // This point is only reached if `redirectToCheckout` fails (e.g., network error)
       if (error) {
-        console.error('Stripe redirection error:', error);
+        logError("Stripe redirect", error);
         throw new Error(error.message || 'Falha ao redirecionar para o checkout');
       }
 
     } catch (error: unknown) {
+      logError("Checkout process", error);
       let errorMessage = 'Ocorreu um erro inesperado.';
       if (error instanceof Error) {
         errorMessage = error.message;
@@ -231,9 +300,8 @@ export default function Home() {
         errorMessage = error;
       }
       setCheckoutError(errorMessage);
-      setIsCheckingOut(false); // Re-enable button on error
-    } 
-    // No need to set isCheckingOut to false on success, as the page redirects
+      setIsCheckingOut(false);
+    }
   };
   // --- End Checkout Handler ---
 
